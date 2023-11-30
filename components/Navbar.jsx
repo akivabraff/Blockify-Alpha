@@ -2,27 +2,8 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi';
-import { mainnet, arbitrum } from '@wagmi/core/chains';
 import styles from '../styles';
 import { navVariants } from '../utils/motion';
-
-// 1. Define constants
-const projectId = '10dd96df3c1b27c7c028d125071be835';
-
-// 2. Create wagmiConfig
-const metadata = {
-  name: 'Web3Modal',
-  description: 'Web3Modal Example',
-  url: 'https://web3modal.com',
-  icons: ['https://avatars.githubusercontent.com/u/37784886'],
-};
-
-const chains = [mainnet, arbitrum];
-const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata });
-
-// 3. Create modal
-const modal = createWeb3Modal({ wagmiConfig, projectId, chains });
 
 const Navbar = () => (
   <motion.nav

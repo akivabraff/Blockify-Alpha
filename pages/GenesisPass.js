@@ -8,29 +8,13 @@ import { ToastContainer, toast } from 'react-toastify';
 // import { initOnboard } from '../utils/onboard';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { createWeb3Modal, defaultWagmiConfig, useWeb3Modal } from '@web3modal/wagmi/react'
-
-import { mainnet, arbitrum } from '@wagmi/core/chains';
+import { useWeb3Modal } from '@web3modal/wagmi/react'
 import { TitleText } from '../components';
 import { redeem, setApprove, isApprovedForAll, checkTokenlist } from '../utils/interact';
 
 const SIGNING_SERVER_URL = 'https://redeemer.upstreet.ai/';
 
-// 1. Define constants
-const projectId = '10dd96df3c1b27c7c028d125071be835';
 
-// 2. Create wagmiConfig
-const metadata = {
-  name: 'Web3Modal',
-  description: 'Web3Modal Example',
-  url: 'https://web3modal.com',
-  icons: ['https://avatars.githubusercontent.com/u/37784886'],
-};
-
-const chains = [mainnet, arbitrum];
-const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata });
-
-createWeb3Modal({ wagmiConfig, projectId, chains });
 
 const Mint = () => {
   // const [onboard, setOnboard] = useState(null);
@@ -374,7 +358,5 @@ const Mint = () => {
 };
 
 export default () => (
-  <WagmiConfig config={wagmiConfig}>
-    <Mint />
-  </WagmiConfig>
+  <Mint />
 );
