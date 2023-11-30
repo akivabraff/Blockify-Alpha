@@ -26,6 +26,7 @@ const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
 // 3. Create modal
 const modal = createWeb3Modal({ wagmiConfig, projectId, chains })
 
+
 const Navbar = () => (
   <motion.nav
     variants={navVariants}
@@ -44,13 +45,13 @@ const Navbar = () => (
       />
       <h2 className="font-extrabold text-[32px] leading-[30.24px] text-white header_title">
         Blockify
-      </h2> 
+      </h2>
       <h3 className='font-extrabold text-[20px] text-white pt-1 hover:text-red-400 hover:cursor-pointer z-20'><Link href="/Marketplace">Marketplace</Link></h3>
       <h3 className='font-extrabold text-[20px] text-white pt-1 hover:text-red-400 hover:cursor-pointer z-20'>Decentralize</h3>
       <h3 className='font-extrabold text-[20px] text-white pt-1 hover:text-red-400 hover:cursor-pointer z-20'><Link href="/GenesisPass">Genesis Pass</Link></h3>
       <h3 className='font-extrabold text-[20px] text-white pt-1 hover:text-red-400 hover:cursor-pointer z-20'><Link href="https://blockify-beta.notion.site/Blockify-Project-Modules-00dfc960175946f4bb1424d9e52324f6?pvs=4" target='_blank'>FAQ</Link></h3>
       <w3m-button />
-    <script type="module" src="main.js"></script>
+      <script type="module" src="main.js"></script>
       <img
         src="/menu.svg"
         alt="menu"

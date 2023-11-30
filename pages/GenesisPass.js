@@ -7,6 +7,29 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { TitleText } from '../components';
 
+
+import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi'
+
+import { mainnet, arbitrum } from '@wagmi/core/chains'
+
+// 1. Define constants
+const projectId = '10dd96df3c1b27c7c028d125071be835'
+
+// 2. Create wagmiConfig
+const metadata = {
+  name: 'Web3Modal',
+  description: 'Web3Modal Example',
+  url: 'https://web3modal.com',
+  icons: ['https://avatars.githubusercontent.com/u/37784886']
+}
+
+const chains = [mainnet, arbitrum]
+const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
+
+// 3. Create modal
+const modal = createWeb3Modal({ wagmiConfig, projectId, chains })
+
+
 const SIGNING_SERVER_URL = 'https://redeemer.upstreet.ai/';
 
 export default function Mint() {
@@ -17,6 +40,20 @@ export default function Mint() {
   const [signature, setSignature] = useState(null);
 
   useEffect(() => {
+    modal.subscribeEvents((e) => {
+      (async () => {
+        const ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
+        console.log('ethersProvider', ethersProvider)
+        const provider = await detectEthereumProvider();
+        if (provider && !walletAddress) { //if wallet is not connected
+          await doConnect()
+        }
+      })()
+
+    })
+  }, []);
+
+  useEffect(() => {
     const onboardData = initOnboard({
       address: (address) => setWalletAddress(address ? address : ''),
       wallet: (wallet) => { }, // removed localstorage part for brevity
@@ -25,6 +62,24 @@ export default function Mint() {
     setSelectedGenesis(null)
     setTokenData(null)
   }, []);
+
+  const doConnect = async () => {
+    const ethersProvider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = ethersProvider.getSigner();
+    const address = await signer.getAddress();
+    const signature = await signer.signMessage(address);
+    setWalletAddress(address);
+    setSignature(signature);
+    const verifiedMessage = ethers.utils.verifyMessage(address, signature);
+    if (verifiedMessage !== address) {
+      console.log('Signature verification failed');
+      return;
+    }
+    await setValidTokens(address, signature)
+  }
+  const openModal = async () => {
+    await modal.open();
+  }
 
   const handleConnectWallet = async () => {
     const walletSelected = await onboard.walletSelect()
@@ -186,10 +241,10 @@ export default function Mint() {
                       <h1 className="uppercase font-bold text-white text-xl md:text-xl bg-gradient-to-br bg-clip-text mt-3 top_title_withAddress">
                         Select a token to redeem
                       </h1>
-                      
+
 
                       {
-                        tokenData.length >=3 ? 
+                        tokenData.length >= 3 ?
                           <div className="grid grid-cols-3 gap-4 mt-6">
                             {tokenData?.map((token, i) => (
                               <div key={i}>
@@ -205,19 +260,19 @@ export default function Mint() {
                             ))}
                           </div>
                           : <div className="grid grid-flow-col auto-cols-max gap-4 mt-6">
-                              {tokenData?.map((token, i) => (
-                                <div key={i}>
-                                  <img
-                                    key={token}
-                                    src="./images/webaverse genesis pass.png"
-                                    alt=""
-                                    className={`w-16 h-16 genesis_img ${token === selectedGenesis && `selected_img`}`}
-                                    onClick={() => setSelectedGenesis(token)}
-                                  />
-                                  <p className='text-white text-center token_ID'>{`#${token}`}</p>
-                                </div>
-                              ))}
-                            </div>
+                            {tokenData?.map((token, i) => (
+                              <div key={i}>
+                                <img
+                                  key={token}
+                                  src="./images/webaverse genesis pass.png"
+                                  alt=""
+                                  className={`w-16 h-16 genesis_img ${token === selectedGenesis && `selected_img`}`}
+                                  onClick={() => setSelectedGenesis(token)}
+                                />
+                                <p className='text-white text-center token_ID'>{`#${token}`}</p>
+                              </div>
+                            ))}
+                          </div>
                       }
                       {
                         selectedGenesis !== null && <>
@@ -259,7 +314,7 @@ export default function Mint() {
                   <img src="./Genesis Pass.png" alt="" className="genesis_img" />
                   <button
                     className="bg-[#000000] text-[#ffffff] mt-6 mb-2 border-2 border-[#5F2EEA] px-8 py-4 text-xl font-bold hover:bg-[#5F2EEA] hover:text-[#ffffff] genesis_pass_connect_btn"
-                    onClick={handleConnectWallet}
+                    onClick={openModal}
                   >
                     Connect Wallet
                   </button>
