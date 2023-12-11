@@ -1,30 +1,30 @@
 'use client';
 
+import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi';
+
+import { mainnet, arbitrum } from '@wagmi/core/chains';
+
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import styles from '../styles';
 import { navVariants } from '../utils/motion';
 
-import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi'
-
-import { mainnet, arbitrum } from '@wagmi/core/chains'
-
 // 1. Define constants
-const projectId = '10dd96df3c1b27c7c028d125071be835'
+const projectId = '10dd96df3c1b27c7c028d125071be835';
 
 // 2. Create wagmiConfig
 const metadata = {
   name: 'Web3Modal',
   description: 'Web3Modal Example',
   url: 'https://web3modal.com',
-  icons: ['https://avatars.githubusercontent.com/u/37784886']
-}
+  icons: ['https://avatars.githubusercontent.com/u/37784886'],
+};
 
-const chains = [mainnet, arbitrum]
-const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
+const chains = [mainnet, arbitrum];
+const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata });
 
 // 3. Create modal
-const modal = createWeb3Modal({ wagmiConfig, projectId, chains })
+const modal = createWeb3Modal({ wagmiConfig, projectId, chains });
 
 const Navbar = () => (
   <motion.nav
@@ -50,7 +50,7 @@ const Navbar = () => (
       <h3 className='font-extrabold text-[20px] text-white pt-1 hover:text-red-400 hover:cursor-pointer z-20'><Link href="/GenesisPass">Genesis Pass</Link></h3>
       <h3 className='font-extrabold text-[20px] text-white pt-1 hover:text-red-400 hover:cursor-pointer z-20'><Link href="https://blockify-beta.notion.site/Blockify-Project-Modules-00dfc960175946f4bb1424d9e52324f6?pvs=4" target='_blank'>FAQ</Link></h3>
       <w3m-button />
-    <script type="module" src="main.js"></script>
+      <script type="module" src="main.js" />
       <img
         src="/menu.svg"
         alt="menu"

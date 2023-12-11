@@ -106,6 +106,10 @@
   filter: blur(150px);
 }
 
+.top-2 {
+  margin-top: 2rem;
+}
+
 .header_title {
   background: -webkit-radial-gradient(
   rgb(68, 61, 199) 0%,

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { initOnboard } from '../utils/onboard';
-import { redeem, setApprove, isApprovedForAll, checkTokenlist } from '../utils/interact';
-import { ethers } from 'ethers';
 import detectEthereumProvider from '@metamask/detect-provider';
+import { ethers } from 'ethers';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi';
+
+import { initOnboard } from '../utils/onboard';
+import { redeem, setApprove, isApprovedForAll, checkTokenlist } from '../utils/interact';
 import { TitleText } from '../components';
 
 const SIGNING_SERVER_URL = 'https://redeemer.upstreet.ai/';
@@ -257,12 +259,9 @@ export default function Mint() {
                   </h1>
                   <TitleText title={<>Pass Token for Blockify</>} textStyles="text-center" />
                   <img src="./Genesis Pass.png" alt="" className="genesis_img" />
-                  <button
-                    className="bg-[#000000] text-[#ffffff] mt-6 mb-2 border-2 border-[#5F2EEA] px-8 py-4 text-xl font-bold hover:bg-[#5F2EEA] hover:text-[#ffffff] genesis_pass_connect_btn"
-                    onClick={handleConnectWallet}
-                  >
-                    Connect Wallet
-                  </button>
+                  <div className="top-2" >
+                    <w3m-button />
+                  </div>
                 </div>
               </>
             )}
