@@ -301,7 +301,12 @@ export default function Mint() {
                     alt=""
                     className="genesis_img"
                   />
-                  <w3m-button />
+                  <button
+                    className="bg-[#000000] text-[#ffffff] mt-6 mb-2 border-2 border-[#5F2EEA] px-8 py-4 text-xl font-bold hover:bg-[#5F2EEA] hover:text-[#ffffff] genesis_pass_connect_btn"
+                    onClick={handleConnectWallet}
+                  >
+                    Connect Wallet
+                  </button>
                 </div>
               </>
             )}
