@@ -31,48 +31,48 @@ export default function Mint() {
     setTokenData(null);
   }, []);
 
-  // const handleConnectWallet = async () => {
-  //   const walletSelected = await onboard.walletSelect();
-  //   if (walletSelected) {
-  //     try {
-  //       await onboard.walletCheck();
-  //       const provider = await detectEthereumProvider();
-  //       if (provider) {
-  //         const ethersProvider = new ethers.providers.Web3Provider(
-  //           window.ethereum
-  //         );
-  //         const signer = ethersProvider.getSigner();
-  //         const address = await signer.getAddress();
-  //         const signature = await signer.signMessage(address);
-  //         setWalletAddress(address);
-  //         setSignature(signature);
-  //         const verifiedMessage = ethers.utils.verifyMessage(
-  //           address,
-  //           signature
-  //         );
-  //         if (verifiedMessage !== address) {
-  //           console.log("Signature verification failed");
-  //           return;
-  //         }
-  //         await setValidTokens(address, signature);
-  //       } else {
-  //         console.log("Please install Metamask.");
-  //       }
-  //     } catch (err) {
-  //       console.log("eeror", err);
-  //       toast.error("Message sign failed", {
-  //         position: "top-right",
-  //         autoClose: 5000,
-  //         hideProgressBar: false,
-  //         closeOnClick: true,
-  //         pauseOnHover: true,
-  //         draggable: true,
-  //         progress: undefined,
-  //         theme: "colored",
-  //       });
-  //     }
-  //   }
-  // };
+   const handleConnectWallet = async () => {
+     const walletSelected = await onboard.walletSelect();
+     if (walletSelected) {
+       try {
+         await onboard.walletCheck();
+         const provider = await detectEthereumProvider();
+         if (provider) {
+           const ethersProvider = new ethers.providers.Web3Provider(
+             window.ethereum
+           );
+           const signer = ethersProvider.getSigner();
+           const address = await signer.getAddress();
+           const signature = await signer.signMessage(address);
+           setWalletAddress(address);
+           setSignature(signature);
+           const verifiedMessage = ethers.utils.verifyMessage(
+             address,
+             signature
+           );
+           if (verifiedMessage !== address) {
+             console.log("Signature verification failed");
+             return;
+           }
+           await setValidTokens(address, signature);
+         } else {
+           console.log("Please install Metamask.");
+         }
+       } catch (err) {
+         console.log("eeror", err);
+         toast.error("Message sign failed", {
+           position: "top-right",
+           autoClose: 5000,
+           hideProgressBar: false,
+           closeOnClick: true,
+           pauseOnHover: true,
+           draggable: true,
+           progress: undefined,
+           theme: "colored",
+        });
+       }
+     }
+   };
 
   const setValidTokens = async (address, signature) => {
     fetch(SIGNING_SERVER_URL, {
